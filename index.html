@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundación Mentores - Transformando vidas</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="./Logo.png" 
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary: #4D8C4A;
+            --secondary: #308C72;
+            --accent: #66A649;
+        }
+
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .btn-accent:hover {
+            background-color: #5a9340;
+            color: white;
+            transform: translateY(-2px);
+            transition: transform 0.3s ease;
+        }
+
+        .hero {
+            min-height: 100%;
+            padding: 80px 0px;
+        }
+
+        .feature-card {
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .social-float {
+            position: fixed;
+            bottom: 40px;
+            right: 10px;
+            z-index: 100;
+            background-color: #292929;
+            border-radius: 100%;
+            height: 50px;
+            width: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-menu {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .social-menu.active {
+            display: flex;
+        }
+
+        .social-item {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .social-item:hover {
+            transform: scale(1.1);
+            color: white;
+        }
+
+        .whatsapp { background-color: #25d366; }
+        .facebook { background-color: #1877f2; }
+        .instagram { background-color: #e4405f; }
+
+           /* Agregar dentro de tu bloque de estilos existente */
+        .scroll-top {
+            position: fixed;
+            bottom: 40px; /* Posicionado encima del botón de redes sociales */
+            left: 10px;
+            z-index: 100;
+            background-color: #292929;
+            border-radius: 100%;
+            height: 50px;
+            width: 50px;
+            display: none; /* Inicialmente oculto */
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+            .scroll-top:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+
+        .gallery-img {
+      width: 100%;
+      height: 200px; /* Altura fija */
+      object-fit: cover; /* Mantiene la proporción y recorta el contenido si es necesario */
+      border-radius: 8px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer; /* Indica que la imagen es interactiva */
+    }
+
+    .gallery-img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-content img {
+      width: 100%;
+      height: auto;
+    }
+
+    
+       /* Estilos para el loader */
+       #loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgb(56, 56, 56, 1); /* Fondo semi-transparente */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999; /* Asegura que esté encima de todo el contenido */
+        transition: opacity 3s ease; /* Transición suave para el desvanecimiento */
+        opacity: 1; /* Inicialmente visible */
+      }
+
+
+/* HTML: <div class="loader"></div> */
+.loader-spinner {
+    --d:30px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    color: var(--primary);
+    box-shadow: 
+      calc(1*var(--d))      calc(0*var(--d))     0 0,
+      calc(0.707*var(--d))  calc(0.707*var(--d)) 0 1px,
+      calc(0*var(--d))      calc(1*var(--d))     0 2px,
+      calc(-0.707*var(--d)) calc(0.707*var(--d)) 0 3px,
+      calc(-1*var(--d))     calc(0*var(--d))     0 4px,
+      calc(-0.707*var(--d)) calc(-0.707*var(--d))0 5px,
+      calc(0*var(--d))      calc(-1*var(--d))    0 6px;
+    animation: l27 0.7s infinite steps(100);
+  }
+  @keyframes l27 {
+    100% {transform: rotate(1turn)}
+  }
+
+    </style>
+</head>
+<body>
+      <!-- Loader (pantalla de carga) -->
+      <div id="loader">
+        <div class="loader-spinner"></div>
+      </div>
+  <!-- Contenido de la página -->
+  <div id="content">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-gradient-primary navbar-dark py-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                <img src="./Logo.png" alt="Zoe Logo" width="20%">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse text-center" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link mb-2 mb-lg-0" href="#">Inicio</a>    
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mb-2 mb-lg-0" href="#">Libro Guia</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mb-2 mb-lg-0" href="#">Productos Digitales</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-accent" href="#">Contáctanos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero d-flex align-items-center bg-light">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <h1 class="display-4 fw-bold mb-4">Transformando vidas a través de la mentoría</h1>
+                    <p class="lead text-muted mb-4">Conectamos mentores experimentados con personas que buscan crecer profesional y personalmente.</p>
+                    <div class="d-grid gap-2 d-md-flex">
+                        <!--
+                        <button class="btn btn-accent btn-lg px-4">Suscribete</button>
+                        <button class="btn btn-outline-secondary btn-lg px-4">Conoce más</button>-->
+                        <button class="btn btn-accent btn-lg px-4" onclick="showContent('vision')">Visión</button>
+                      <button class="btn btn-accent btn-lg px-4" onclick="showContent('mision')">Misión</button>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <img src="./galeria/kentuky/Foto (3).jpeg" style="border-radius: 50px; display: flex; justify-content: center;" width="100%" class="img-fluid" alt="Mentoría">
+                </div>
+            </div>
+            <div class="row">
+                <div class="container">
+                    <!-- Contenido dinámico -->
+                    <div id="dynamic-content" class="pt-5">
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container text-center my-5">
+        <h1>Taller de inteligencia emocional</h1>
+        <p class="lead">Selecciona la ciudad para ver su galería</p>
+        
+        <!-- Botones -->
+        <div class="mb-2">
+          <button class="btn btn-accent me-2" onclick="loadGallery('nature')">Taller de Symor</button>
+          <button class="btn btn-accent me-2" onclick="loadGallery('city')">Taller de Kentucky</button>
+         <!--  <button class="btn btn-warning" onclick="loadGallery('people')">Galería de Personas</button>-->
+        </div>
+        
+        <!-- Contenedor de Galería -->
+        <div id="gallery-container" class="row g-4">
+          <!-- Aquí se cargará dinámicamente la galería -->
+        </div>
+      </div>
+
+    <!-- Video Section 
+    <section class="py-5 bg-white">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center mb-4">
+                    <h2>Conoce Nuestro Impacto</h2>
+                    <p class="lead text-muted">Descubre cómo estamos transformando vidas en nuestra comunidad</p>
+                </div>
+                <div class="col-lg-10">
+                    <div class="ratio ratio-16x9 shadow-lg rounded overflow-hidden">
+                        <video 
+                            controls
+                            muted
+                            autoplay
+                            loop
+                            class="w-100"
+                            poster="ruta-a-tu-imagen-de-portada.jpg">
+                            <source src="./WhatsApp Video 2024-12-23 at 1.01.27 PM.mp4"  type="video/mp4">
+                            Tu navegador no soporta el elemento de video.
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+-->
+   
+
+ 
+
+    <!-- Productos Digitales Section -->
+    <section class="py-5 bg-white">
+        <div class="container">
+            <h2 class="text-center mb-5">conoce nuestros talleres que te llevarán a <span style="color: var(--primary);">TRANSFORMAR</span> tu mente y corazón para vivir la <span style="color: var(--primary);">VIDA</span> que <span style="color: var(--primary);">SUEÑA</span></h2>
+            <div class="row g-4">
+                <!-- Producto 1 -->
+                <div class="col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <img src="./paquetes/INFOPRODUCTO 1.png" style="width: 90%; margin: auto;" win class="card-img-top" alt="E-book">
+                        <div class="card-body">
+                            <h3 class="h6">Sana tu energia femenina</h3>
+                            <p class="text-muted"></p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="h4 mb-0"></span>
+                                <button class="btn btn-accent " data-product-name="E-book: Guía del Emprendedor Hispano" data-product-price="29.99">Suscribete ahora</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Producto 2 -->
+                <div class="col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <img src="./paquetes/INFOPRODUCTO 2.png" style="width: 90%; margin: auto;" win class="card-img-top" alt="Curso">
+                        <div class="card-body">
+                            <h3 class="h6">5 niveles de conciencia</h3>
+                            <p class="text-muted"></p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="h4 mb-0"></span>
+                                <button class="btn btn-accent " data-product-name="Curso Online: Liderazgo Efectivo" data-product-price="149.99">Suscribete ahora</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Producto 3 -->
+                <div class="col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <img src="./paquetes/INFOPRODUCTO 3.png"  style="width: 90%; margin: auto;" class="card-img-top" alt="Taller">
+                        <div class="card-body">
+                            <h3 class="h6">Sana tu treangulo relacional</h3>
+                            <p class="text-muted"></p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="h4 mb-0"></span>
+                                <button class="btn btn-accent " data-product-name="Taller Virtual: Finanzas Personales" data-product-price="79.99">Suscribete ahora</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recursos Digitales Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <img src="./Taller.jpeg" class="img-fluid" style="border-radius: 30px;" alt="Libro Guía">
+                </div>
+                <div class="col-lg-6">
+                    <h2 class="mb-4">Recursos para tu Desarrollo</h2>
+                    <div class="mb-4">
+                        <h3 class="h4 mb-3">📚 Libro Guía "Camino al Éxito"</h3>
+                        <p class="text-muted">Descubre las estrategias probadas y herramientas prácticas que han ayudado a cientos de hispanos a alcanzar sus metas en los Estados Unidos.</p>
+                        <a href="#" class="btn btn-accent mb-4">Obtén tu copia digital</a>
+                    </div>
+                    
+                    <h3 class="h4 mb-3">🎯 Contenido Digital Premium</h3>
+                    <div class="list-group mb-4">
+                        <div class="list-group-item border-0 bg-transparent">
+                            <i class="bi bi-play-circle-fill text-primary me-2"></i>
+                            Curso en línea de Liderazgo
+                        </div>
+                        <div class="list-group-item border-0 bg-transparent">
+                            <i class="bi bi-journal-text text-primary me-2"></i>
+                            Plantillas y recursos descargables
+                        </div>
+                        <div class="list-group-item border-0 bg-transparent">
+                            <i class="bi bi-camera-video-fill text-primary me-2"></i>
+                            Webinars mensuales exclusivos
+                        </div>
+                        <div class="list-group-item border-0 bg-transparent">
+                            <i class="bi bi-people-fill text-primary me-2"></i>
+                            Acceso a comunidad privada
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-outline-primary">Explorar recursos digitales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  
+
+    <!-- Features Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">¿Por qué elegirnos?</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 feature-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="mb-4">
+                                <i class="bi bi-person-check fs-1 text-primary"></i>
+                            </div>
+                            <h3 class="h4 mb-3">Mentoría Personalizada</h3>
+                            <p class="text-muted mb-0">Programas adaptados a tus necesidades específicas y objetivos personales.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 feature-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="mb-4">
+                                <i class="bi bi-star fs-1 text-primary"></i>
+                            </div>
+                            <h3 class="h4 mb-3">Mentores Expertos</h3>
+                            <p class="text-muted mb-0">Red de profesionales con amplia experiencia en diferentes industrias.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 feature-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="mb-4">
+                                <i class="bi bi-graph-up fs-1 text-primary"></i>
+                            </div>
+                            <h3 class="h4 mb-3">Impacto Real</h3>
+                            <p class="text-muted mb-0">Resultados medibles y seguimiento continuo de tu desarrollo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <img src="./Logo.png" alt="Zoe Logo" width="150" class="mb-4">
+                    <p class="mb-4">Transformando vidas a través de la mentoría y el desarrollo personal en la comunidad hispana.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-light"><i class="bi bi-facebook fs-5"></i></a>
+                        <a href="#" class="text-light"><i class="bi bi-instagram fs-5"></i></a>
+                        <a href="#" class="text-light"><i class="bi bi-linkedin fs-5"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h4 class="mb-4">Contacto</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-3"><i class="bi bi-geo-alt me-2"></i>123 Calle Principal, Ciudad</li>
+                        <li class="mb-3"><i class="bi bi-envelope me-2"></i>info@fundacionmentores.org</li>
+                        <li class="mb-3"><i class="bi bi-telephone me-2"></i>(123) 456-7890</li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h4 class="mb-4">Secciones</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Inicio</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Libro guia</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Productos Digitales</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Contáctanos</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2024 Fundación Mentores. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Agregar este modal después del footer y antes de los scripts -->
+    <div class="modal fade" id="paymentModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Selecciona tu método de pago</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-grid gap-3">
+                        <button class="btn btn-lg btn-outline-primary payment-option">
+                            <i class="bi bi-paypal me-2"></i>
+                            Pagar con PayPal
+                        </button>
+                        <button class="btn btn-lg btn-outline-dark payment-option">
+                            <i class="bi bi-credit-card me-2"></i>
+                            Pagar con Tarjeta
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Reemplazar el enlace de WhatsApp existente con esto -->
+    <div class="social-float">
+        <div class="social-menu" id="socialMenu">
+            <a href="https://wa.me/TUNUMERODEWHATSAPP" class="social-item whatsapp" target="_blank">
+                <i class="bi bi-whatsapp"></i>
+            </a>
+            <a href="https://facebook.com/TUPAGINA" class="social-item facebook" target="_blank">
+                <i class="bi bi-facebook"></i>
+            </a>
+            <a href="https://instagram.com/TUPAGINA" class="social-item instagram" target="_blank">
+                <i class="bi bi-instagram"></i>
+            </a>
+        </div>
+        <a href="#" class="whatsapp-float" id="socialToggle">
+            <i class="bi bi-share" style="font-size: 20px; color: white;"></i>
+        </a>
+        <a href="#" class="scroll-top" id="scrollTop">
+            <i class="bi bi-arrow-up" style="font-size: 20px; color: white;"></i>
+        </a>
+    </div>
+
+  </div>
+<!-- Agregar este script antes del cierre del body -->
+
+<script src="loader.js"></script>
+<script>
+   // Control del botón scroll top
+   const scrollTop = document.getElementById('scrollTop');
+   
+   window.addEventListener('scroll', function() {
+       if (window.pageYOffset > 300) { // Mostrar después de 300px de scroll
+           scrollTop.style.display = 'flex';
+       } else {
+           scrollTop.style.display = 'none';
+       }
+   });
+    scrollTop.addEventListener('click', function(e) {
+       e.preventDefault();
+       window.scrollTo({
+           top: 0,
+           behavior: 'smooth'
+       });
+    });
+</script>
+
+    <!-- Agregar antes del cierre del body -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const buyButtons = document.querySelectorAll('.buy-now');
+        const paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
+        
+        buyButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const productName = this.getAttribute('data-product-name');
+                const productPrice = this.getAttribute('data-product-price');
+                // Aquí puedes usar productName y productPrice si necesitas mostrarlos en el modal
+                paymentModal.show();
+            });
+        });
+    
+        document.querySelectorAll('.payment-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Aquí puedes agregar la lógica para cada método de pago
+                alert('Redirigiendo al proceso de pago...');
+                paymentModal.hide();
+            });
+        });
+    });
+    </script>
+    <!-- Agregar antes del cierre del body -->
+    <script>
+        document.getElementById('socialToggle').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('socialMenu').classList.toggle('active');
+        });
+    </script>
+
+<script>
+    // Datos de las galerías
+    const galleries = {
+      nature: [
+        "./galeria/Foto (1).jpeg",
+        "./galeria/Foto (2).jpeg",
+        "./galeria/Foto (3).jpeg",
+        "./galeria/Foto (4).jpeg",
+        "./galeria/Foto (5).jpeg",
+        "./galeria/Foto (6).jpeg",
+        "./galeria/Foto (7).jpeg",
+        "./galeria/Foto (8).jpeg",
+        "./galeria/Foto (9).jpeg",
+        "./galeria/Foto (10).jpeg",
+        "./galeria/Foto (11).jpeg",
+        "./galeria/Foto (12).jpeg",
+        "./galeria/Foto (13).jpeg",
+        "./galeria/Foto (14).jpeg",
+        "./galeria/Foto (15).jpeg",
+        "./galeria/Foto (16).jpeg",
+      ],
+      city: [
+      "./galeria/kentuky/Foto (1).jpeg",
+      "./galeria/kentuky/Foto (2).jpeg",
+      "./galeria/kentuky/Foto (3).jpeg",
+      "./galeria/kentuky/Foto (4).jpeg",
+      "./galeria/kentuky/Foto (5).jpeg",
+      "./galeria/kentuky/Foto (6).jpeg",
+      "./galeria/kentuky/Foto (7).jpeg",
+      "./galeria/kentuky/Foto (8).jpeg",
+      "./galeria/kentuky/Foto (9).jpeg",
+      "./galeria/kentuky/Foto (10).jpeg",
+      "./galeria/kentuky/Foto (11).jpeg",
+      "./galeria/kentuky/Foto (12).jpeg",
+      "./galeria/kentuky/Foto (13).jpeg",
+      "./galeria/kentuky/Foto (14).jpeg",
+      "./galeria/kentuky/Foto (15).jpeg",
+      "./galeria/kentuky/Foto (16).jpeg",
+      "./galeria/kentuky/Foto (17).jpeg",
+      "./galeria/kentuky/Foto (18).jpeg",
+      "./galeria/kentuky/Foto (19).jpeg",
+      "./galeria/kentuky/Foto (20).jpeg",
+      "./galeria/kentuky/Foto (21).jpeg",
+      "./galeria/kentuky/Foto (22).jpeg",
+      "./galeria/kentuky/Foto (23).jpeg",
+      "./galeria/kentuky/Foto (24).jpeg",
+      "./galeria/kentuky/Foto (25).jpeg",
+      "./galeria/kentuky/Foto (26).jpeg",
+      "./galeria/kentuky/Foto (27).jpeg",
+      "./galeria/kentuky/Foto (28).jpeg",
+      "./galeria/kentuky/Foto (29).jpeg",
+      "./galeria/kentuky/Foto (30).jpeg",
+      "./galeria/kentuky/Foto (31).jpeg",
+      "./galeria/kentuky/Foto (32).jpeg",
+      "./galeria/kentuky/Foto (33).jpeg",
+      "./galeria/kentuky/Foto (34).jpeg",
+      "./galeria/kentuky/Foto (35).jpeg",
+      "./galeria/kentuky/Foto (36).jpeg",
+      "./galeria/kentuky/Foto (37).jpeg",
+      "./galeria/kentuky/Foto (38).jpeg",
+
+      ],
+      people: [
+        "./galeria/people1.jpg",
+        "./galeria/people2.jpg",
+        "./galeria/people3.jpg",
+        "./galeria/people4.jpg"
+      ]
+    };
+
+   
+    // Función para cargar la galería
+    function loadGallery(type) {
+      const galleryContainer = document.getElementById('gallery-container');
+      galleryContainer.innerHTML = ''; // Limpiar contenido anterior
+
+      // Generar las imágenes de la galería seleccionada
+      galleries[type].forEach(imgSrc => {
+        const col = document.createElement('div');
+        col.className = 'col-12 col-sm-6 col-md-4 col-lg-3';
+        col.innerHTML = `<img src="${imgSrc}" alt="Foto" class="gallery-img">`;
+        galleryContainer.appendChild(col);
+      });
+    }
+
+    // Mostrar la galería "nature" automáticamente al cargar la página
+    document.addEventListener('DOMContentLoaded', () => {
+      loadGallery('nature');
+    });
+  </script>
+
+  <!-- Script -->
+<script>
+    // Contenidos predefinidos
+    const contents = {
+      vision: `
+        <h2 class="mb-4">Nuestra Visión</h2>
+        <p class="lead">
+            Ser el principal motor de empoderamiento y transformación para la comunidad hispana en los Estados Unidos, 
+            impulsando su desarrollo integral mediante capacitación, entrenamiento y acceso a recursos que les permitan 
+            alcanzar su máximo potencial personal, profesional y social.
+        </p>
+        <p class="lead">
+            Aspiramos a construir una sociedad más equitativa, en la que los hispanos lideren con confianza, 
+            contribuyan al bienestar colectivo y vivan plenamente sus sueños en un entorno inclusivo y próspero.
+        </p>
+      `,
+      mision: `
+        <h2 class="mb-4">Nuestra Misión</h2>
+        <p class="lead">
+            Capacitar, entrenar e inspirar a la comunidad hispana en los Estados Unidos para que desarrollen sus habilidades, 
+            conocimientos y confianza, fomentando el emprendimiento, el liderazgo y la integración en la sociedad, 
+            con el propósito de construir un futuro sostenible y lleno de oportunidades.
+        </p>
+        <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <h3 class="h4 mb-4">Objetivos Generales</h3>
+                            <ul class="list-unstyled">
+                                <li class="mb-3"><i class="bi bi-check-circle-fill text-primary me-2"></i>Promover el desarrollo integral de las personas hispanas.</li>
+                                <li class="mb-3"><i class="bi bi-check-circle-fill text-primary me-2"></i>Fomentar la equidad y la inclusión social.</li>
+                                <li class="mb-3"><i class="bi bi-check-circle-fill text-primary me-2"></i>Contribuir al fortalecimiento de la comunidad hispana.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <h3 class="h4 mb-4">Metas de Impacto</h3>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h4 class="h5 mb-3">Corto Plazo (1-3 años)</h4>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2"><i class="bi bi-arrow-right text-accent me-2"></i>1,000 beneficiarios</li>
+                                        <li class="mb-2"><i class="bi bi-arrow-right text-accent me-2"></i>20 programas</li>
+                                        <li class="mb-2"><i class="bi bi-arrow-right text-accent me-2"></i>200 mentorías</li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h4 class="h5 mb-3">Largo Plazo (5-10 años)</h4>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2"><i class="bi bi-arrow-right text-accent me-2"></i>10,000 beneficiarios</li>
+                                        <li class="mb-2"><i class="bi bi-arrow-right text-accent me-2"></i>100 programas</li>
+                                        <li class="mb-2"><i class="bi bi-arrow-right text-accent me-2"></i>2,000 mentorías</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+      `,
+    };
+  
+    // Función para cambiar el contenido
+    function showContent(type) {
+      const contentContainer = document.getElementById('dynamic-content');
+      contentContainer.innerHTML = contents[type] || '<p class="text-muted">Contenido no disponible.</p>';
+    }
+  </script>
+</body>
+</html>
